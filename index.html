@@ -3,155 +3,208 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#173b5e">
 <title>My UK Address Finder</title>
 <style>
-:root {
-  --site-primary: #173b5e;
-  --site-on-primary: #ffffff;
-  --site-secondary: #dceaf3;
-  --site-on-secondary: #17324a;
-  --site-background: #eef3f7;
-  --site-on-background: #172432;
-  --site-font-body: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  --site-font-heading: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  --site-heading-scale: 1;
-  --site-spacing-scale: 1;
-  --site-radius-scale: 1;
-  --site-decoration-opacity: 1;
-  color-scheme: light dark;
-}
-* { box-sizing: border-box; }
-body { margin: 0; font-family: var(--site-font-body); background: var(--site-background); color: var(--site-on-background); }
-.app { min-height: 100vh; width: 100%; background: light-dark(#eef3f7, #101923); color: light-dark(#172432, #e9f0f6); padding: calc(22px * var(--site-spacing-scale)) 16px 40px; }
-.shell { width: min(100%, 650px); margin: 0 auto; }
-header { display: flex; align-items: center; gap: 12px; margin: 6px 0 24px; }
-.logo { width: 46px; height: 46px; display: grid; place-items: center; border-radius: calc(14px * var(--site-radius-scale)); background: var(--site-primary); color: var(--site-on-primary); font-size: 22px; font-weight: 800; }
-h1 { font-family: var(--site-font-heading); font-size: calc(23px * var(--site-heading-scale)); line-height: 1.15; margin: 0; }
-.sub { margin-top: 4px; color: light-dark(#617386, #a7b7c7); font-size: 13px; }
-.panel { background: light-dark(#ffffff, #1b2835); border: 1px solid light-dark(#dce5ec, #304253); border-radius: calc(20px * var(--site-radius-scale)); padding: 20px; box-shadow: 0 8px 24px rgba(17, 39, 58, .06); }
-.label { display: block; font-size: 13px; font-weight: 700; margin-bottom: 9px; }
-.searchrow { display: flex; gap: 9px; }
-input { min-width: 0; flex: 1; border: 1px solid light-dark(#bdccd8, #465b6e); background: light-dark(#f8fafc, #111d28); color: inherit; border-radius: 12px; padding: 15px 14px; font-size: 17px; outline: none; text-transform: uppercase; }
-input:focus { border-color: #3b83b7; box-shadow: 0 0 0 3px rgba(59,131,183,.15); }
-button { border: 0; border-radius: 12px; padding: 0 19px; background: var(--site-primary); color: var(--site-on-primary); font-size: 15px; font-weight: 700; cursor: pointer; }
-button:focus-visible, a:focus-visible { outline: 3px solid #e5a93c; outline-offset: 3px; }
-.hint { color: light-dark(#687b8d, #a9bac9); font-size: 12px; margin: 10px 1px 0; line-height: 1.5; }
-.notice { display: flex; gap: 10px; align-items: flex-start; background: light-dark(#fff6df, #3a3020); color: light-dark(#684a0d, #f3d99b); border: 1px solid light-dark(#f0d99e, #66502a); padding: 12px 13px; border-radius: 13px; font-size: 12px; line-height: 1.45; margin-top: 16px; }
-.results { margin-top: 18px; display: none; }
-.results.show { display: block; }
-.resultshead { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; margin: 0 2px 10px; }
-.resultshead strong { font-size: 15px; }
-.resultshead span { color: light-dark(#687b8d, #a9bac9); font-size: 12px; }
-.address { background: light-dark(#fff, #1b2835); border: 1px solid light-dark(#dce5ec, #304253); border-radius: 14px; padding: 14px; margin-bottom: 9px; display: flex; gap: 12px; align-items: center; }
-.pin { flex: 0 0 36px; width: 36px; height: 36px; border-radius: 11px; display: grid; place-items: center; background: var(--site-secondary); color: var(--site-on-secondary); font-size: 17px; }
-.addressinfo { min-width: 0; flex: 1; }
-.addressinfo strong { display: block; font-size: 14px; line-height: 1.35; }
-.addressinfo small { display: block; color: light-dark(#687b8d, #a9bac9); margin-top: 3px; font-size: 12px; }
-.address a { display: inline-flex; align-items: center; justify-content: center; padding: 9px 11px; font-size: 12px; border-radius: 10px; background: var(--site-primary); color: var(--site-on-primary); text-decoration: none; font-weight: 700; white-space: nowrap; }
-.filter { width: 100%; margin: 0 0 12px; padding: 11px 12px; font-size: 14px; text-transform: none; }
-.empty { display: none; padding: 17px; border: 1px dashed light-dark(#bdccd8, #465b6e); border-radius: 14px; color: light-dark(#617386, #a9bac9); font-size: 13px; line-height: 1.5; }
-.empty.show { display: block; }
-footer { text-align: center; color: light-dark(#718394, #8ea1b2); font-size: 11px; margin-top: 24px; line-height: 1.5; }
-@media (max-width: 420px) { .panel { padding: 16px; } button.search { padding: 0 14px; } }
+:root{color-scheme:light dark;--blue:#173b5e;--line:light-dark(#dce5ec,#304253);--muted:light-dark(#687b8d,#a9bac9)}
+*{box-sizing:border-box}
+body{margin:0;font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;background:light-dark(#eef3f7,#101923);color:light-dark(#172432,#e9f0f6)}
+.app{min-height:100vh;padding:22px 14px 38px}.shell{max-width:680px;margin:auto}
+header{display:flex;align-items:center;gap:12px;margin:6px 0 22px}
+.logo{width:46px;height:46px;display:grid;place-items:center;border-radius:14px;background:var(--blue);color:white;font-size:23px}
+h1{font-size:22px;line-height:1.15;margin:0}.sub{margin-top:4px;color:var(--muted);font-size:13px}
+.panel{background:light-dark white,#1b2835;border:1px solid var(--line);border-radius:20px;padding:19px;box-shadow:0 8px 24px #11273a0f}
+.label{display:block;font-size:13px;font-weight:700;margin-bottom:8px}
+input{width:100%;min-width:0;border:1px solid light-dark(#bdccd8,#465b6e);background:light-dark(#f8fafc,#111d28);color:inherit;border-radius:12px;padding:13px;font-size:16px}
+input:focus{outline:2px solid #3b83b7;outline-offset:1px}
+.searchrow{display:flex;gap:9px}.searchrow input{flex:1;text-transform:uppercase}
+button,.maps{border:0;border-radius:11px;background:var(--blue);color:white;font-size:14px;font-weight:700;padding:12px 16px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;justify-content:center}
+button:disabled{opacity:.55;cursor:wait}
+.hint{color:var(--muted);font-size:12px;line-height:1.5;margin:9px 1px 0}
+.settings{margin-top:17px;padding:13px;background:light-dark(#f4f7fa,#142230);border:1px solid var(--line);border-radius:14px}
+.settings summary{font-size:13px;font-weight:700;cursor:pointer}
+.keyrow{display:flex;gap:8px;margin-top:11px}.keyrow input{font-size:13px}
+.keyhelp{font-size:11px;color:var(--muted);line-height:1.5;margin:8px 0 0}
+.status{display:none;margin-top:14px;padding:12px 13px;border-radius:12px;font-size:13px;line-height:1.45}
+.status.show{display:block}.status.info{background:light-dark(#e8f2fb,#172d40);color:light-dark(#214d70,#c7e2f7)}
+.status.error{background:light-dark(#fff0ed,#3a211f);color:light-dark(#8c2f22,#ffc9c0)}
+.status.success{background:light-dark(#eaf7ed,#1c3524);color:light-dark(#236334,#c4edcc)}
+.results{display:none;margin-top:18px}.results.show{display:block}
+.resultshead{display:flex;justify-content:space-between;gap:10px;align-items:baseline;margin:0 2px 10px}
+.resultshead strong{font-size:15px}.resultshead span{font-size:12px;color:var(--muted)}
+.filter{margin-bottom:12px;font-size:14px}
+.address{display:flex;gap:10px;align-items:center;padding:13px;margin-bottom:9px;background:light-dark(#fff,#1b2835);border:1px solid var(--line);border-radius:14px}
+.pin{flex:0 0 34px;width:34px;height:34px;display:grid;place-items:center;border-radius:10px;background:light-dark(#dceaf3,#28445a);color:light-dark(#17324a,#e5f3ff)}
+.addressinfo{min-width:0;flex:1}.addressinfo strong{display:block;font-size:14px;line-height:1.35;overflow-wrap:anywhere}
+.addressinfo small{display:block;color:var(--muted);font-size:12px;line-height:1.4;margin-top:4px;overflow-wrap:anywhere}
+.maps{font-size:12px;padding:9px 10px;white-space:nowrap}
+footer{text-align:center;color:var(--muted);font-size:11px;line-height:1.5;margin-top:20px}
+@media(max-width:430px){.panel{padding:15px}.searchrow{gap:7px}.searchrow button{padding:0 13px}.address{gap:8px;padding:11px}.maps{padding:9px 8px;font-size:11px}}
 </style>
 </head>
 <body>
-<main class="app">
-  <div class="shell">
-    <header>
-      <div class="logo">⌖</div>
-      <div><h1>My UK Address Finder</h1><div class="sub">Quick postcode-to-address lookup</div></div>
-    </header>
-    <section class="panel">
-      <label class="label" for="postcode">Enter a UK postcode</label>
-      <div class="searchrow">
-        <input id="postcode" type="text" placeholder="e.g. M1 1AE" autocomplete="postal-code" maxlength="10" />
-        <button class="search" id="searchBtn">Search</button>
-      </div>
-      <p class="hint">Try the PR2 5LX test postcode. Choose an individual unit to open its Google Maps search.</p>
-      <div class="notice"><span>ⓘ</span><span><strong>Test data:</strong> PR2 5LX results are based on a public postcode address listing. Google Maps may place a unit at the postcode or estate entrance; check the pin before driving.</span></div>
-      <div class="results" id="results">
-        <input class="filter" id="filter" type="search" placeholder="Filter units or business names" aria-label="Filter addresses" />
-        <div class="resultshead"><strong id="resultTitle">PR2 5LX addresses</strong><span id="resultCount">34 records</span></div>
-        <div id="addressList"></div>
-      </div>
-      <div class="empty" id="empty">No test list is loaded for this postcode yet. This version currently includes PR2 5LX only.</div>
-    </section>
-    <footer>PR2 5LX test list · Public address references · Google Maps links<br>Not a live nationwide postcode database yet.</footer>
+<main class="app"><div class="shell">
+<header><div class="logo">⌖</div><div><h1>My UK Address Finder</h1><div class="sub">Live UK postcode-to-address lookup</div></div></header>
+<section class="panel">
+  <label class="label" for="postcode">Enter a UK postcode</label>
+  <div class="searchrow"><input id="postcode" type="text" placeholder="e.g. PR2 5LX" autocomplete="postal-code" maxlength="10"><button id="searchBtn">Search</button></div>
+  <p class="hint">Search a postcode to list its addresses, including units and business names. Tap Navigate to open Google Maps.</p>
+
+  <details class="settings" open id="keySettings">
+    <summary>API key setup (one-time on this device)</summary>
+    <div class="keyrow"><input id="apiKey" type="password" placeholder="Paste your Ideal Postcodes API Key (ak_…)" autocomplete="off" spellcheck="false"><button id="saveKeyBtn" type="button">Save</button></div>
+    <p class="keyhelp">Your key is saved only in this browser on this device, not written into this website file. Do not share it. You can clear it here if needed.</p>
+    <div class="keyrow"><button id="clearKeyBtn" type="button">Clear saved key</button></div>
+  </details>
+
+  <div id="status" class="status" role="status" aria-live="polite"></div>
+  <div class="results" id="results">
+    <input class="filter" id="filter" type="search" placeholder="Filter units or business names" aria-label="Filter addresses">
+    <div class="resultshead"><strong id="resultTitle">Addresses</strong><span id="resultCount"></span></div>
+    <div id="addressList"></div>
   </div>
-</main>
+</section>
+<footer>Address data supplied by Ideal Postcodes (PAF). Always check the destination pin and access details before driving.</footer>
+</div></main>
 <script>
+const API_BASE = 'https://api.ideal-postcodes.co.uk/v1/postcodes/';
 const input = document.getElementById('postcode');
+const apiKeyInput = document.getElementById('apiKey');
+const searchBtn = document.getElementById('searchBtn');
+const statusBox = document.getElementById('status');
 const results = document.getElementById('results');
-const empty = document.getElementById('empty');
 const addressList = document.getElementById('addressList');
 const filter = document.getElementById('filter');
-const addresses = [
-  ['Brammer UK Ltd','Unit E105-E106, Red Scar Industrial Estate, Longridge Road, Ribbleton, Preston, PR2 5LX'],
-  ['Camera Tech','Unit A121, Red Scar Industrial Estate, Longridge Road, Ribbleton, Preston, PR2 5LX'],
-  ['Docklands Electrical & Mechanical Ltd','Unit A123, Red Scar Industrial Estate, Longridge Road, Ribbleton, Preston, PR2 5LX'],
-  ['E & M Ltd','Unit A123, Red Scar Industrial Estate, Longridge Road, Ribbleton, Preston, PR2 5LX'],
-  ['Lenahan Scaffolding','Unit G8, Red Scar Industrial Estate, Longridge Road, Ribbleton, Preston, PR2 5LX'],
-  ['Matter Retail','Unit E101-E103, Red Scar Industrial Estate, Longridge Road, Ribbleton, Preston, PR2 5LX'],
-  ['Morrells Woodfinishes','Unit E104, Red Scar Industrial Estate, Longridge Road, Ribbleton, Preston, PR2 5LX'],
-  ['N Palmer Deliveries','Unit A116, Red Scar Industrial Estate, Longridge Road, Ribbleton, Preston, PR2 5LX'],
-  ['O C International Transport','Unit G3, Red Scar Industrial Estate, Longridge Road, Ribbleton, Preston, PR2 5LX'],
-  ['Optimum Signs Ltd','Unit A122, Red Scar Industrial Estate, Longridge Road, Ribbleton, Preston, PR2 5LX'],
-  ['Quay Plastics','Unit A124, Red Scar Industrial Estate, Longridge Road, Ribbleton, Preston, PR2 5LX'],
-  ['Ribble Valley Sports Cars','Unit A117, Red Scar Industrial Estate, Longridge Road, Ribbleton, Preston, PR2 5LX'],
-  ['School Library Services','Unit A128-A129, Red Scar Industrial Estate, Longridge Road, Ribbleton, Preston, PR2 5LX'],
-  ['Sharrocks Ltd','Unit G2, Red Scar Industrial Estate, Longridge Road, Ribbleton, Preston, PR2 5LX'],
-  ['Sheet Pilling','Unit G15, Red Scar Industrial Estate, Longridge Road, Ribbleton, Preston, PR2 5LX'],
-  ['Walton Distribution Ltd','Unit A119, Red Scar Industrial Estate, Longridge Road, Ribbleton, Preston, PR2 5LX'],
-  ['A53','A53, Red Scar Industrial Estate, Longridge Road, Ribbleton, Preston, PR2 5LX'],
-  ['E1','E1, Red Scar Industrial Estate, Longridge Road, Ribbleton, Preston, PR2 5LX'],
-  ['E2','E2, Red Scar Industrial Estate, Longridge Road, Ribbleton, Preston, PR2 5LX'],
-  ['Unit A125','Unit A125, Red Scar Industrial Estate, Longridge Road, Ribbleton, Preston, PR2 5LX'],
-  ['Unit A127','Unit A127, Red Scar Industrial Estate, Longridge Road, Ribbleton, Preston, PR2 5LX'],
-  ['Unit G9','Unit G9, Red Scar Industrial Estate, Longridge Road, Ribbleton, Preston, PR2 5LX'],
-  ['Unit G11','Unit G11, Red Scar Industrial Estate, Longridge Road, Ribbleton, Preston, PR2 5LX'],
-  ['Unit G16','Unit G16, Red Scar Industrial Estate, Longridge Road, Ribbleton, Preston, PR2 5LX'],
-  ['Camera Technology Northwest Ltd','Unit A121, Tustin Way, Red Scar Industrial Estate, Longridge Road, Ribbleton, Preston, PR2 5LX'],
-  ['Docklands Electrical & Mechanical Ltd','Unit A123, Tustin Way, Red Scar Industrial Estate, Longridge Road, Ribbleton, Preston, PR2 5LX'],
-  ['Eye Candy Digital Ltd','A118, Red Scar Industrial Estate, Longridge Road, Ribbleton, Preston, PR2 5LX'],
-  ['Flynn Property Company Ltd','C48-C49 Fulwell Court, Red Scar Business Park, Longridge Road, Preston, PR2 5LX'],
-  ['Matter Retail Ltd','E101, Red Scar Business Park, Longridge Road, Preston, PR2 5LX'],
-  ['Optimum Signs Ltd','Unit A122, Tustin Way, Red Scar Industrial Estate, Longridge Road, Preston, PR2 5LX'],
-  ['Ribble Valley Auto Tech Ltd','Unit A117, Tustin Way, Red Scar Industrial Estate, Longridge Road, Preston, PR2 5LX'],
-  ['Ribble Valley Sports Cars Ltd','Unit A117, Tustin Way, Red Scar Industrial Estate, Longridge Road, Preston, PR2 5LX'],
-  ['Turismo Automotive Ltd','Unit A116, Tustin Way, Red Scar Industrial Estate, Longridge Road, Preston, PR2 5LX'],
-  ['Walton Distribution Ltd','Unit A119, Tustin Way, Red Scar Business Park, Longridge Road, Preston, PR2 5LX']
-];
+const resultTitle = document.getElementById('resultTitle');
+const resultCount = document.getElementById('resultCount');
+const STORAGE_KEY = 'myUkAddressFinder.idealPostcodesKey';
+let currentAddresses = [];
+
+function showStatus(message, type='info') {
+  statusBox.textContent = message;
+  statusBox.className = 'status show ' + type;
+}
+function hideResults() {
+  results.classList.remove('show');
+  addressList.replaceChildren();
+}
+function cleanText(value) {
+  return typeof value === 'string' ? value.trim() : '';
+}
+function makeAddress(item) {
+  const lines = [item.line_1, item.line_2, item.line_3, item.post_town, item.postcode]
+    .map(cleanText).filter((value, index, arr) => value && arr.indexOf(value) === index);
+  return lines.join(', ');
+}
+function displayName(item) {
+  return cleanText(item.organisation_name) ||
+    cleanText(item.department_name) ||
+    cleanText(item.building_name) ||
+    cleanText(item.sub_building_name) ||
+    cleanText(item.line_1) || 'Address';
+}
 function renderAddresses() {
   const term = filter.value.trim().toLowerCase();
-  const matches = addresses.filter(([name, address]) => (name + ' ' + address).toLowerCase().includes(term));
+  const matches = currentAddresses.filter(item => {
+    const searchable = [
+      item.organisation_name, item.department_name, item.sub_building_name,
+      item.building_name, item.building_number, item.line_1, item.line_2,
+      item.line_3, item.post_town, item.postcode
+    ].map(cleanText).join(' ').toLowerCase();
+    return searchable.includes(term);
+  });
   addressList.replaceChildren();
-  matches.forEach(([name, address]) => {
+  matches.forEach(item => {
     const row = document.createElement('div'); row.className = 'address';
-    const pin = document.createElement('div'); pin.className = 'pin'; pin.textContent = '⌂';
+    const pin = document.createElement('div'); pin.className = 'pin'; pin.textContent = '⌖';
     const info = document.createElement('div'); info.className = 'addressinfo';
-    const title = document.createElement('strong'); title.textContent = name;
-    const detail = document.createElement('small'); detail.textContent = address;
+    const title = document.createElement('strong'); title.textContent = displayName(item);
+    const detail = document.createElement('small'); detail.textContent = makeAddress(item);
     info.append(title, detail);
-    const link = document.createElement('a'); link.textContent = 'Navigate'; link.target = '_blank'; link.rel = 'noopener';
-    link.href = 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(address);
+    const link = document.createElement('a');
+    link.className = 'maps'; link.textContent = 'Navigate';
+    link.target = '_blank'; link.rel = 'noopener noreferrer';
+    link.href = 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(makeAddress(item));
     row.append(pin, info, link); addressList.append(row);
   });
-  document.getElementById('resultCount').textContent = matches.length + ' of ' + addresses.length + ' records';
+  resultCount.textContent = matches.length + ' of ' + currentAddresses.length + ' addresses';
+  if (!matches.length) {
+    const p = document.createElement('p'); p.className = 'hint'; p.textContent = 'No matching addresses. Try a different search word.';
+    addressList.append(p);
+  }
 }
-filter.addEventListener('input', renderAddresses);
-function runSearch() {
-  const value = input.value.trim().toUpperCase();
-  results.classList.remove('show');
-  empty.classList.remove('show');
-  if (!value) { input.focus(); input.setCustomValidity('Please enter a UK postcode.'); input.reportValidity(); return; }
-  input.setCustomValidity('');
-  if (value.replace(/\s/g, '') === 'PR25LX') { filter.value = ''; renderAddresses(); results.classList.add('show'); }
-  else empty.classList.add('show');
+function explainApiError(data, httpStatus) {
+  const code = data && data.code;
+  if (code === 2001 || httpStatus === 404) return 'I could not find that postcode. Check the spelling and try again.';
+  if (code === 4010 || code === 4011 || httpStatus === 401) return 'The API key was not accepted, or this website is not on the Allowed URLs list. Check the key and the exact allowed domain.';
+  if (code === 4020 || httpStatus === 402) return 'The free trial balance may have run out, or the key has no available lookup credits.';
+  if (code === 4030 || httpStatus === 403) return 'This API key does not have the required UK address dataset enabled.';
+  if (data && data.message) return 'Ideal Postcodes returned: ' + data.message + (code ? ' (code ' + code + ')' : '');
+  return 'The request could not be completed (HTTP ' + httpStatus + '). Please try again later.';
 }
-document.getElementById('searchBtn').addEventListener('click', runSearch);
+async function runSearch() {
+  const postcode = input.value.trim().toUpperCase().replace(/\s+/g, ' ');
+  const key = localStorage.getItem(STORAGE_KEY) || '';
+  hideResults();
+  if (!key) {
+    showStatus('First save your Ideal Postcodes API key in the API key setup section above.', 'error');
+    document.getElementById('keySettings').open = true;
+    apiKeyInput.focus();
+    return;
+  }
+  if (!postcode) {
+    showStatus('Please enter a UK postcode.', 'error');
+    input.focus();
+    return;
+  }
+  searchBtn.disabled = true;
+  searchBtn.textContent = 'Searching…';
+  showStatus('Searching the postcode database…', 'info');
+  try {
+    const url = API_BASE + encodeURIComponent(postcode.replace(/\s/g, ''));
+    const response = await fetch(url, {method:'GET', headers:{'Authorization':'Bearer ' + key}});
+    const data = await response.json();
+    if (!response.ok || data.code !== 2000) {
+      showStatus(explainApiError(data, response.status), 'error');
+      return;
+    }
+    currentAddresses = Array.isArray(data.result) ? data.result : [];
+    filter.value = '';
+    resultTitle.textContent = postcode + ' addresses';
+    renderAddresses();
+    results.classList.add('show');
+    showStatus(currentAddresses.length
+      ? 'Success — found ' + (data.total || currentAddresses.length) + ' address records for ' + postcode + '.'
+      : 'The postcode was found, but no address records were returned.', currentAddresses.length ? 'success' : 'info');
+  } catch (error) {
+    showStatus('Could not connect to Ideal Postcodes. Check your internet connection and try again. If this keeps happening, tell me the exact error shown.', 'error');
+  } finally {
+    searchBtn.disabled = false;
+    searchBtn.textContent = 'Search';
+  }
+}
+document.getElementById('saveKeyBtn').addEventListener('click', () => {
+  const key = apiKeyInput.value.trim();
+  if (!key.startsWith('ak_')) {
+    showStatus('The API key should normally start with ak_. Please check it and try again.', 'error');
+    return;
+  }
+  localStorage.setItem(STORAGE_KEY, key);
+  apiKeyInput.value = '';
+  showStatus('API key saved in this browser on this device. You can now search a postcode.', 'success');
+});
+document.getElementById('clearKeyBtn').addEventListener('click', () => {
+  localStorage.removeItem(STORAGE_KEY);
+  apiKeyInput.value = '';
+  showStatus('Saved API key cleared from this browser.', 'info');
+});
+searchBtn.addEventListener('click', runSearch);
 input.addEventListener('keydown', event => { if (event.key === 'Enter') runSearch(); });
-input.addEventListener('input', () => input.setCustomValidity(''));
+filter.addEventListener('input', renderAddresses);
+if (localStorage.getItem(STORAGE_KEY)) {
+  showStatus('API key is already saved in this browser. Enter a postcode to search.', 'success');
+  document.getElementById('keySettings').open = false;
+}
 </script>
 </body>
 </html>
