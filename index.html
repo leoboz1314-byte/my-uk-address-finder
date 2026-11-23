@@ -128,7 +128,7 @@ function renderAddresses() {
     const link = document.createElement('a');
     link.className = 'maps'; link.textContent = 'Navigate';
     link.target = '_blank'; link.rel = 'noopener noreferrer';
-    link.href = 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(makeAddress(item));
+    link.href = 'https://www.google.com/maps/dir/?api=1&destination=' + encodeURIComponent(makeAddress(item)) + '&travelmode=driving&dir_action=navigate;
     row.append(pin, info, link); addressList.append(row);
   });
   resultCount.textContent = matches.length + ' of ' + currentAddresses.length + ' addresses';
