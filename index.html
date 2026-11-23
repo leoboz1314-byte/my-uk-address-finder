@@ -4,6 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#173b5e">
+<meta name="description" content="Quick UK postcode-to-address lookup for delivery drivers.">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icons/app-192.png">
+<meta name="theme-color" content="#173b5e">
 <title>My UK Address Finder</title>
 <style>
 :root{color-scheme:light dark;--blue:#173b5e;--line:light-dark(#dce5ec,#304253);--muted:light-dark(#687b8d,#a9bac9)}
@@ -206,5 +210,16 @@ if (localStorage.getItem(STORAGE_KEY)) {
   document.getElementById('keySettings').open = false;
 }
 </script>
+
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./service-worker.js').catch((error) => {
+      console.warn('App offline shell registration failed:', error);
+    });
+  });
+}
+</script>
+
 </body>
 </html>
